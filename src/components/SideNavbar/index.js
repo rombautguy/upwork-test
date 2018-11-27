@@ -5,9 +5,10 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 
 import { setSideNav } from '../../actions'
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import styled from 'styled-components';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import './style.scss'
 
 import Detail from '../../content/Courses/Detail'
 import Courses from '../../content/Courses'
@@ -22,8 +23,18 @@ const Main = styled.main`
 
 class SideNavbar extends React.Component {
   state = {
-    selected: 'courses'
+    selected: 'courses',
+    collepseNav: false
   };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  }
+
+  resize() {
+    this.setState({ collepseNav: window.innerWidth > 800 });
+  }
 
   onSelect = (selected, location, history) => {
     this.setState({ selected: selected });
@@ -34,7 +45,6 @@ class SideNavbar extends React.Component {
   };
   onToggle = (expanded) => {
     this.props.setSideNav()
-    // this.setState({ expanded: expanded });
   };
 
   pageTitle = {
@@ -45,32 +55,20 @@ class SideNavbar extends React.Component {
     'settings/network': ['Settings', 'Network']
   };
 
-  renderBreadcrumbs() {
-    // const { selected } = this.state;
-    // console.log(selected, this.pageTitle, 'render')
-    // const list = ensureArray(this.pageTitle[selected]);
-    // console.log(list)
-
-    // return (
-    //   <Breadcrumb tag="nav" listTag="div">
-    //     <BreadcrumbItem><a href="#" onClick={() => this.props.history.goBack()}>Courses</a></BreadcrumbItem>
-    //     <BreadcrumbItem active>Course Detail</BreadcrumbItem>
-    //   </Breadcrumb>
-    // );
-  }
-
   navigate = (pathname) => () => {
     this.setState({ selected: pathname });
   };
 
   render() {
     const { sideNavExpanded } = this.props;
+    const { collepseNav } = this.state
     return (
       <Route render={({ location, history }) => (
         <React.Fragment>
           <SideNav
+            className="side-nav"
             onSelect={(selected) => this.onSelect(selected, location, history)}
-            expanded={sideNavExpanded}
+            expanded={sideNavExpanded && collepseNav}
             onToggle={this.onToggle}
           >
             <SideNav.Toggle />
@@ -115,7 +113,7 @@ class SideNavbar extends React.Component {
                   {this.renderBreadcrumbs()}
               </Main> */}
           {/* <Switch> */}
-          <Main expanded={sideNavExpanded}>
+          <Main expanded={sideNavExpanded && collepseNav}>
             <Route exact path="/courses" component={Courses} history={this.props.history} />
             <Route path="/" exact component={Courses} history={this.props.history} />
             <Route path="/settings/setting1" component={props => <div>setting1</div>} />

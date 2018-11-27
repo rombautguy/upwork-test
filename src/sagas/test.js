@@ -14,3 +14,17 @@ export const getCourses = function* getCourses(action) {
     yield put({ type: 'GET_COURSES_FAILURE' })
   }
 }
+
+export const getCourseById = function* getCourseById(action) {
+  try {
+    const response = yield api.getCourseById(action.payload)
+    response
+      ? yield put({
+          type: 'GET_COURSE_BY_ID_SUCCEEDED',
+          data: response
+        })
+      : yield put({ type: 'GET_COURSES_FAILURE' })
+  } catch (e) {
+    yield put({ type: 'GET_COURSES_FAILURE' })
+  }
+}

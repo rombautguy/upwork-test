@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { getCourseById } from '../../../actions'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import classnames from 'classnames';
 /**
@@ -10,10 +11,10 @@ import classnames from 'classnames';
 import { setCurrentTab } from '../../../actions'
 
 class Detail extends Component {
-  // state = {
-  //   activeTab: '1'
-  // }
-
+  componentDidMount() {
+    const courseId = this.props.match.params.id
+    this.props.getCourseById(courseId)
+  }
   toggle(tab) {
     if (this.props.tabIndex !== tab) {
       this.setState({
@@ -23,15 +24,15 @@ class Detail extends Component {
   }
 
   render() {
-    const { tabIndex } = this.props
+    const { tabIndex, course } = this.props
     return (
       <div>
         <Breadcrumb tag="nav" listTag="div">
-          <BreadcrumbItem><span onClick={() => this.props.history.goBack()}>Courses</span></BreadcrumbItem>
+          <BreadcrumbItem><a href="#" onClick={() => this.props.history.goBack()}>Courses</a></BreadcrumbItem>
           <BreadcrumbItem active>Course Detail</BreadcrumbItem>
         </Breadcrumb>
 
-        <div>#{this.props.match.params.id} course</div>
+        <div>#{course.id} course</div>
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -54,7 +55,7 @@ class Detail extends Component {
           <TabPane tabId="1">
             <Row>
               <Col sm="12">
-                <h4>Tab 1 Contents</h4>
+                <h4>{course.name} - {course.price}</h4>
               </Col>
             </Row>
           </TabPane>
@@ -73,13 +74,15 @@ class Detail extends Component {
 
 function mapStateToProps(state) {
   return {
-    tabIndex: state.testReducer.tabIndex
+    tabIndex: state.testReducer.tabIndex,
+    course: state.testReducer.course
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCurrentTab: tabIndex => dispatch(setCurrentTab(tabIndex))
+    setCurrentTab: tabIndex => dispatch(setCurrentTab(tabIndex)),
+    getCourseById: id => dispatch(getCourseById(id))
   }
 }
 

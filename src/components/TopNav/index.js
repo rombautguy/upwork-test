@@ -16,8 +16,18 @@ import {
 
 class TopNav extends React.Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    collepseNav: false
   };
+  componentDidMount() {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  }
+
+  resize() {
+    this.setState({ collepseNav: window.innerWidth > 800 });
+  }
+
   toggleSide = () => {
     this.props.setSideNav()
   }
@@ -28,17 +38,19 @@ class TopNav extends React.Component {
   }
   render() {
     const { sideNavExpanded } = this.props;
+    const { collepseNav } = this.state
     return (
       <Fragment>
-        <Navbar color="light" light expand="md" style={{marginLeft: sideNavExpanded ? 240 : 64}}>
+        <Navbar color="light" light expand="md" style={{marginLeft: sideNavExpanded && collepseNav ? 240 : 64}}>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav navbar>
+            {collepseNav &&
               <NavItem>
-                <Button color="primary" size="sm" onClick={this.toggleSide}>
-                  <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-                </Button>
+                {(sideNavExpanded && collepseNav) && <Button color="primary" size="sm" onClick={this.toggleSide}><i className='fa fa-chevron-left' style={{ fontSize: '1.75em' }} /></Button>}
+                {!(sideNavExpanded && collepseNav) && <Button color="primary" size="sm" onClick={this.toggleSide}><i className='fa fa-chevron-right' style={{ fontSize: '1.75em' }} /></Button>}
               </NavItem>
+            }
             </Nav>
           </Collapse>
         </Navbar>

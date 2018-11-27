@@ -1,6 +1,7 @@
 export const initialTestState = {
   tabIndex: '1',
   courses: [],
+  course: {},
   sideNavExpanded: true
 }
 
@@ -15,6 +16,11 @@ export default function testReducer(state = initialTestState, action) {
       return {
         ...state,
         courses: action.data
+      }
+    case 'GET_COURSE_BY_ID_SUCCEEDED':
+      return {
+        ...state,
+        course: action.data
       }
     case 'SET_SIDENAV':
       return {

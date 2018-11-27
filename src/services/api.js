@@ -16,5 +16,10 @@ export const api = {
     })
     // let endPoint = ''
     // return apiRequest.get(endPoint)
+  },
+  getCourseById: id => {
+    return new Promise((resolve, rejects) => {
+      resolve(courses.filter(course => course.id === id)[0])
+    })
   }
 }

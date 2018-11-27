@@ -11,6 +11,13 @@ export function getCourses() {
   }
 }
 
+export function getCourseById(id) {
+  return {
+    type: 'GET_COURSE_BY_ID',
+    payload: id
+  }
+}
+
 export function setSideNav() {
   return {
     type: 'SET_SIDENAV'
