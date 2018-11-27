@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { getCourseById } from '../../../actions'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import classnames from 'classnames';
-/**
- * Redux Config
- */
-import { setCurrentTab } from '../../../actions'
+import { setCurrentTab, getCourseById } from '../../../actions'
 
 class Detail extends Component {
   componentDidMount() {
