@@ -10,3 +10,9 @@ export function getCourses() {
     type: 'GET_COURSES'
   }
 }
+
+export function setSideNav() {
+  return {
+    type: 'SET_SIDENAV'
+  }
+}

@@ -1,10 +1,10 @@
 export const initialTestState = {
   tabIndex: '1',
-  courses: []
+  courses: [],
+  sideNavExpanded: true
 }
 
 export default function testReducer(state = initialTestState, action) {
-  console.log('reducer', action)
   switch (action.type) {
     case 'SET_CURRENT_TAB':
       return {
@@ -15,6 +15,11 @@ export default function testReducer(state = initialTestState, action) {
       return {
         ...state,
         courses: action.data
+      }
+    case 'SET_SIDENAV':
+      return {
+        ...state,
+        sideNavExpanded: !state.sideNavExpanded
       }
     default:
       return state

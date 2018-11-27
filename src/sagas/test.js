@@ -2,7 +2,6 @@ import { put } from 'redux-saga/effects'
 import { api } from '../services/api'
 
 export const getCourses = function* getCourses(action) {
-  console.log('saga')
   try {
     const response = yield api.getCourses()
     response

@@ -27,7 +27,7 @@ class Detail extends Component {
     return (
       <div>
         <Breadcrumb tag="nav" listTag="div">
-          <BreadcrumbItem><p onClick={() => this.props.history.goBack()}>Courses</p></BreadcrumbItem>
+          <BreadcrumbItem><span onClick={() => this.props.history.goBack()}>Courses</span></BreadcrumbItem>
           <BreadcrumbItem active>Course Detail</BreadcrumbItem>
         </Breadcrumb>
 
